@@ -1,13 +1,10 @@
 from collections import namedtuple
 import json
-from ssl import SSLWantReadError
+from ssl import SSLError
 
 from websocket import create_connection
 
 from slackclient._slackrequest import SlackRequest
-from slackclient._channel import Channel
-from slackclient._user import User
-from slackclient._util import SearchList
 
 User = namedtuple('User', 'server name id real_name tz')
 Channel = namedtuple('Channel', 'server name id members')
@@ -83,7 +80,7 @@ class Server(object):
             if "members" not in channel:
                 channel["members"] = []
 
-            self.attach_channel(channel['name'], channel['id'], channel['members']
+            self.attach_channel(channel['name'], channel['id'], channel['members'])
 
     def parse_user_data(self, user_data):
         for user in user_data:
@@ -123,8 +120,17 @@ class Server(object):
         while True:
             try:
                 data += "{}\n".format(self.websocket.recv())
-            except SSLWantReadError:
-                return ''
+
+            except SSLError as e:
+                if e.errno == 2:
+                    # errno 2 occurs when trying to read or write data, but more
+                    # data needs to be received on the underlying TCP transport
+                    # before the request can be fulfilled.
+                    #
+                    # Python 2.7.9+ and Python 3.3+ give this its own exception,
+                    # SSLWantReadError
+                    return ''
+                raise
             return data.rstrip()
 
     def attach_channel(self, name, id, members=[]):
