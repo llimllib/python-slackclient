@@ -1,5 +1,4 @@
-from slackclient._user import User
-from slackclient._server import Server, SlackLoginError
+from slackclient._server import Server, SlackLoginError, User
 from slackclient._channel import Channel
 import json
 import pytest
@@ -16,11 +15,11 @@ def test_Server(server):
 
 def test_Server_parse_channel_data(server, login_data):
     server.parse_channel_data(login_data["channels"])
-    assert type(server.channels.find('general')) == Channel
+    assert type(server.channels['C01CX1234']) == Channel
 
 def test_Server_parse_user_data(server, login_data):
     server.parse_user_data(login_data["users"])
-    assert type(server.users.find('fakeuser')) == User
+    assert type(server.users['U10CX1234']) == User
 
 def test_Server_cantconnect(server):
     with pytest.raises(SlackLoginError):
@@ -28,6 +27,5 @@ def test_Server_cantconnect(server):
 
 @pytest.mark.xfail
 def test_Server_ping(server, monkeypatch):
-    #monkeypatch.setattr("", lambda: True)
     monkeypatch.setattr("websocket.create_connection", lambda: True)
     reply = server.ping()
