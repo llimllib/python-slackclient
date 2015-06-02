@@ -5,9 +5,9 @@ from ssl import SSLError
 from websocket import create_connection
 
 from slackclient._slackrequest import SlackRequest
+from slackclient._channel import Channel
 
 User = namedtuple('User', 'server name id real_name tz')
-Channel = namedtuple('Channel', 'server name id members')
 Bot = namedtuple('Bot', 'id name icons deleted')
 
 class Server(object):
