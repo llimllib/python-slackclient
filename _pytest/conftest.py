@@ -1,6 +1,5 @@
 import pytest
-from slackclient._channel import Channel
-from slackclient._server import Server
+from slackclient._server import Server, Channel
 from slackclient._client import SlackClient
 
 @pytest.fixture

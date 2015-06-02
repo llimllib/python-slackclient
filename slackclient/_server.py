@@ -1,12 +1,14 @@
-from slackclient._slackrequest import SlackRequest
-from slackclient._channel import Channel
-from slackclient._user import User
-from slackclient._util import SearchList
-from ssl import SSLWantReadError
+from collections import namedtuple
+import json
+from ssl import SSLError
 
 from websocket import create_connection
-import json
 
+from slackclient._slackrequest import SlackRequest
+from slackclient._channel import Channel
+
+User = namedtuple('User', 'server name id real_name tz')
+Bot = namedtuple('Bot', 'id name icons deleted')
 
 class Server(object):
     def __init__(self, token, connect=True):
@@ -15,8 +17,9 @@ class Server(object):
         self.domain = None
         self.login_data = None
         self.websocket = None
-        self.users = SearchList()
-        self.channels = SearchList()
+        self.users = {}
+        self.channels = {}
+        self.bots = {}
         self.connected = False
         self.pingcounter = 0
         self.api_requester = SlackRequest()
@@ -61,6 +64,7 @@ class Server(object):
         self.parse_channel_data(login_data["groups"])
         self.parse_channel_data(login_data["ims"])
         self.parse_user_data(login_data["users"])
+        self.parse_bot_data(login_data["bots"])
 
     def connect_slack_websocket(self, ws_url):
         try:
@@ -75,9 +79,8 @@ class Server(object):
                 channel["name"] = channel["id"]
             if "members" not in channel:
                 channel["members"] = []
-            self.attach_channel(channel["name"],
-                                channel["id"],
-                                channel["members"])
+
+            self.attach_channel(channel['name'], channel['id'], channel['members'])
 
     def parse_user_data(self, user_data):
         for user in user_data:
@@ -85,7 +88,17 @@ class Server(object):
                 user["tz"] = "unknown"
             if "real_name" not in user:
                 user["real_name"] = user["name"]
-            self.attach_user(user["name"], user["id"], user["real_name"], user["tz"])
+
+            id = user['id']
+            name = user['name']
+            real_name = user['real_name']
+            tz = user['tz']
+
+            self.users[user['id']] = User(self, name, id, real_name, tz)
+
+    def parse_bot_data(self, bot_data):
+        for bot in bot_data:
+            self.bots[bot['id']] = Bot(bot['id'], bot['name'], bot['icons'], bot['deleted'])
 
     def send_to_websocket(self, data):
         """Send (data) directly to the websocket."""
@@ -107,15 +120,21 @@ class Server(object):
         while True:
             try:
                 data += "{}\n".format(self.websocket.recv())
-            except SSLWantReadError:
-                return ''
+
+            except SSLError as e:
+                if e.errno == 2:
+                    # errno 2 occurs when trying to read or write data, but more
+                    # data needs to be received on the underlying TCP transport
+                    # before the request can be fulfilled.
+                    #
+                    # Python 2.7.9+ and Python 3.3+ give this its own exception,
+                    # SSLWantReadError
+                    return ''
+                raise
             return data.rstrip()
 
-    def attach_user(self, name, id, real_name, tz):
-        self.users.append(User(self, name, id, real_name, tz))
-
     def attach_channel(self, name, id, members=[]):
-        self.channels.append(Channel(self, name, id, members))
+        self.channels[id] = Channel(self, name, id, members)
 
     def join_channel(self, name):
         print(self.api_requester.do(self.token,

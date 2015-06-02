@@ -35,18 +35,14 @@ class SlackClient(object):
         else:
             raise SlackNotConnected
 
-    def rtm_send_message(self, channel, message):
-        return self.server.channels.find(channel).send_message(message)
+    def rtm_send_message(self, channel_id, message):
+        return self.server.channels[channel_id].send_message(message)
 
     def process_changes(self, data):
         if "type" in data.keys():
-            if data["type"] == 'channel_created':
+            if data["type"] in ['channel_created', 'im_created']:
                 channel = data["channel"]
                 self.server.attach_channel(channel["name"], channel["id"], [])
-            if data["type"] == 'im_created':
-                channel = data["channel"]
-                self.server.attach_channel(channel["user"], channel["id"], [])
-            pass
 
 
 class SlackNotConnected(Exception):

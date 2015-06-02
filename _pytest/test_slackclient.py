@@ -20,7 +20,7 @@ def test_SlackClient(slackclient):
 
 def test_SlackClient_process_changes(slackclient, channel_created, im_created):
     slackclient.process_changes(channel_created)
-    assert type(slackclient.server.channels.find('fun')) == Channel
+    assert type(slackclient.server.channels['C024BE91L']) == Channel
     slackclient.process_changes(im_created)
-    assert type(slackclient.server.channels.find('U123BL234')) == Channel
+    assert type(slackclient.server.channels['D024BE91L']) == Channel
 
