@@ -299,7 +299,16 @@
             "presence": "active"
         }
     ],
-    "bots": [],
+    "bots": [
+        {
+            "deleted": false,
+            "icons": {
+                "image_48": "https://slack.global.ssl.fastly.net/26133/plugins/bot/assets/bot_48.png"
+            },
+            "id": "B035JM633",
+            "name": "bot"
+        }
+      ],
     "cache_version": "v5-dog",
     "url": "wss:\/\/ms9999.slack-msgs.com\/websocket\/rvyiQ_oxNhQ2C6_613rtqs1PFfT0AmivZTokv\/VOVQCmq3bk\/KarC2Z2ZMFfdMMtxn4kx9ILl6sE7JgvKv6Bct5okT0Lgru416DXsKJolJQ="
 }

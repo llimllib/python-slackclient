@@ -1,4 +1,4 @@
-from slackclient._server import Server, SlackLoginError, User
+from slackclient._server import Server, SlackLoginError, User, Bot
 from slackclient._channel import Channel
 import json
 import pytest
@@ -24,6 +24,10 @@ def test_Server_parse_user_data(server, login_data):
 def test_Server_cantconnect(server):
     with pytest.raises(SlackLoginError):
         reply = server.ping()
+
+def test_Server_bots(server, login_data):
+    server.parse_bot_data(login_data['bots'])
+    assert type(server.bots['B035JM633']) == Bot
 
 @pytest.mark.xfail
 def test_Server_ping(server, monkeypatch):
