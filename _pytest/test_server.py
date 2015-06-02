@@ -27,7 +27,12 @@ def test_Server_cantconnect(server):
 
 def test_Server_bots(server, login_data):
     server.parse_bot_data(login_data['bots'])
-    assert type(server.bots['B035JM633']) == Bot
+    bot = server.bots['B035JM633']
+    assert type(bot) == Bot
+    assert bot.deleted == False
+    assert bot.icons == {"image_48": "https://slack.global.ssl.fastly.net/26133/plugins/bot/assets/bot_48.png"}
+    assert bot.id == "B035JM633"
+    assert bot.name == "bot"
 
 @pytest.mark.xfail
 def test_Server_ping(server, monkeypatch):
