@@ -1,14 +1,22 @@
-from setuptools import setup
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-setup(name='slackclient',
-      version='0.15',
-      description='Python client for Slack.com',
-      url='http://github.com/slackhq/python-slackclient',
-      author='Ryan Huber',
-      author_email='ryan@slack-corp.com',
-      license='MIT',
-      packages=['slackclient'],
-      install_requires=[
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
+
+setup(
+    name='slackrtm',
+    version='0.0.1',
+    description='Python client for Slack.com',
+    url='http://github.com/llimllib/slackrtm',
+    author='Bill Mill',
+    author_email='ryan@slack-corp.com',
+    license='MIT',
+    packages=['slackrtm'],
+    install_requires=[
         'websocket-client',
-      ],
-      zip_safe=False)
+    ],
+    zip_safe=False,
+)
