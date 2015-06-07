@@ -1,5 +1,5 @@
-from slackclient._client import SlackClient
-from slackclient._channel import Channel
+from slackrtm._client import SlackClient
+from slackrtm._channel import Channel
 import json
 import pytest
 

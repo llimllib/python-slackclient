@@ -1,4 +1,4 @@
-from slackclient._channel import Channel
+from slackrtm._channel import Channel
 import pytest
 
 def test_Channel(channel):
