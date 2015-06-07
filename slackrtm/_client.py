@@ -42,7 +42,7 @@ class SlackClient(object):
         if "type" in data.keys():
             if data["type"] in ['channel_created', 'im_created']:
                 channel = data["channel"]
-                self.server.attach_channel(channel["name"], channel["id"], [])
+                self.server.attach_channel(channel.get("name", ""), channel["id"], [])
 
 
 class SlackNotConnected(Exception):
