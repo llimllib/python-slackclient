@@ -1,6 +1,6 @@
 import pytest
-from slackrtm._server import Server, Channel
-from slackrtm._client import SlackClient
+from slackrtm.server import Server, Channel
+from slackrtm.client import SlackClient
 
 @pytest.fixture
 def server(monkeypatch):

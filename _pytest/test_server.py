@@ -1,5 +1,5 @@
-from slackrtm._server import Server, SlackLoginError, User, Bot
-from slackrtm._channel import Channel
+from slackrtm.server import Server, SlackLoginError, User, Bot
+from slackrtm.channel import Channel
 import json
 import pytest
 

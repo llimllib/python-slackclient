@@ -4,8 +4,8 @@ from ssl import SSLError
 
 from websocket import create_connection
 
-from ._slackrequest import SlackRequest
-from ._channel import Channel
+from .slackrequest import SlackRequest
+from .channel import Channel
 
 User = namedtuple('User', 'server name id real_name tz')
 Bot = namedtuple('Bot', 'id name icons deleted')
