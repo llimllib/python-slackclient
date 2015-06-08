@@ -1,4 +1,11 @@
-python-slackclient
+```
+     _            _         _
+    | |          | |       | |
+ ___| | __ _  ___| | ___ __| |_ _ __ ___
+/ __| |/ _` |/ __| |/ / '__| __| '_ ` _ \
+\__ \ | (_| | (__|   <| |  | |_| | | | | |
+|___/_|\__,_|\___|_|\_\_|   \__|_| |_| |_|
+```
 ================
 A basic client for Slack.com, which can optionally connect to the Slack Real Time Messaging (RTM) API.
 
@@ -8,19 +15,20 @@ This plugin is a light wrapper around the [Slack API](https://api.slack.com/). I
 
 The optional RTM connection allows you to create a persistent websocket connection, from which you can read events just like an official Slack client. This allows you to respond to events in real time without polling and send messages without making a full HTTPS request.
 
-See [python-rtmbot](https://github.com/slackhq/python-rtmbot/) for an active project utilizing this library.
+See [limbo](https://github.com/llimllib/limbo/) for an active project utilizing this library.
 
 Installation
 ----------
 
 #### Automatic w/ PyPI ([virtualenv](http://virtualenv.readthedocs.org/en/latest/) is recommended.)
 
-    pip install slackclient
+    pip install slackrtm
 
 #### Manual
 
-    git clone https://github.com/slackhq/python-slackclient.git
+    git clone https://github.com/llimllib/slackrtm.git
     pip install -r requirements.txt
+    python setupy.py install
 
 Usage
 -----
@@ -32,7 +40,7 @@ _Note:_ You must obtain a token for the user/bot. You can find or generate these
 
 ```python
 import time
-from slackclient import SlackClient
+from slackrtm import SlackClient
 
 token = "xoxp-28192348123947234198234"      # found at https://api.slack.com/#auth)
 sc = SlackClient(token)
@@ -44,7 +52,7 @@ print sc.api_call("channels.info", channel="1234567890")
 ---------
 ```python
 import time
-from slackclient import SlackClient
+from slackrtm import SlackClient
 
 token = "xoxp-28192348123947234198234"# found at https://api.slack.com/#auth)
 sc = SlackClient(token)
