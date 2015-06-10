@@ -14,3 +14,9 @@ requirements:
 .PHONY: clean
 clean:
 	rm -rf build dist slackrtm.egg-info
+
+.PHONY: publish
+publish:
+	pandoc -s -w rst README.md -o README.rs
+	python setup.py sdist upload
+	rm README.rs
