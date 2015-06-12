@@ -9,6 +9,8 @@
 ================
 A basic client for Slack.com, which can optionally connect to the Slack Real Time Messaging (RTM) API.
 
+![](https://travis-ci.org/llimllib/slackrtm.svg?branch=master)
+
 Overview
 ---------
 This plugin is a light wrapper around the [Slack API](https://api.slack.com/). In its basic form, it can be used to call any API method and be expected to return a dict of the JSON reply.
