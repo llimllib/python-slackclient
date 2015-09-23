@@ -98,7 +98,7 @@ class Server(object):
 
     def parse_bot_data(self, bot_data):
         for bot in bot_data:
-            self.bots[bot['id']] = Bot(bot['id'], bot['name'], bot['icons'], bot['deleted'])
+            self.bots[bot['id']] = Bot(bot['id'], bot['name'], bot.get('icons', ''), bot['deleted'])
 
     def send_to_websocket(self, data):
         """Send (data) directly to the websocket."""
