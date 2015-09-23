@@ -43,7 +43,7 @@ class SlackClient(object):
         }
         params["post_data"].update(kwargs)
 
-        self.server.api_call("chat.postMessage", params)
+        self.server.api_call("chat.postMessage", **params)
 
     def process_changes(self, data):
         if "type" in data.keys():
