@@ -8,7 +8,7 @@ except ImportError:
 
 setup(
     name='slackrtm',
-    version='0.1.0',
+    version='0.1.1',
     description='Python client for Slack.com',
     url='http://github.com/llimllib/slackrtm',
     author='Bill Mill',
