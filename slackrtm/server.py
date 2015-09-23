@@ -141,7 +141,7 @@ class Server(object):
                                     "channels.join?name={0}".format(name)).read())
 
     def api_call(self, method, **kwargs):
-        reply = self.api_requester.do(self.token, method, kwargs)
+        reply = self.api_requester.do(self.token, method, **kwargs)
         return reply.read()
 
 
