@@ -34,6 +34,17 @@ class SlackClient(object):
     def rtm_send_message(self, channel_id, message):
         return self.server.channels[channel_id].send_message(message)
 
+    def post_message(self, channel_id, message, **kwargs):
+        params = {
+            "post_data": {
+                "text": message,
+                "channel": channel_id,
+            }
+        }
+        params["post_data"].update(kwargs)
+
+        self.server.api_call("chat.postMessage", params)
+
     def process_changes(self, data):
         if "type" in data.keys():
             if data["type"] in ['channel_created', 'im_created']:
