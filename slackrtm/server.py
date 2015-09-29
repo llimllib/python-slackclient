@@ -130,7 +130,6 @@ class Server(object):
                     # errno 2 occurs when trying to read or write data, but more
                     # data needs to be received on the underlying TCP transport
                     # before the request can be fulfilled.
-                    print("returning data {}".format(data))
                     return data
                 raise
 
