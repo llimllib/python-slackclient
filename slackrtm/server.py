@@ -2,6 +2,12 @@ from collections import namedtuple
 import json
 from ssl import SSLError
 
+# python 2.7.9+ and python 3 have this error
+try:
+    from ssl import SSLWantReadError
+except ImportError:
+    SSLWantReadError = SSLError
+
 from websocket import create_connection
 
 from .slackrequest import SlackRequest
@@ -115,23 +121,18 @@ class Server(object):
         """ Returns data if available, otherwise ''. Newlines indicate multiple
             messages
         """
-
-        data = ""
+        data = []
         while True:
             try:
-                data += "{0}\n".format(self.websocket.recv())
-
-            except SSLError as e:
+                data.append(self.websocket.recv())
+            except (SSLError, SSLWantReadError) as e:
                 if e.errno == 2:
                     # errno 2 occurs when trying to read or write data, but more
                     # data needs to be received on the underlying TCP transport
                     # before the request can be fulfilled.
-                    #
-                    # Python 2.7.9+ and Python 3.3+ give this its own exception,
-                    # SSLWantReadError
-                    return ''
+                    print("returning data {}".format(data))
+                    return data
                 raise
-            return data.rstrip()
 
     def attach_channel(self, name, id, members=[]):
         self.channels[id] = Channel(self, name, id, members)
