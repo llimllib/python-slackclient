@@ -3,7 +3,7 @@
 
 import json
 
-from .server import Server
+from .server import Server, User
 
 class SlackClient(object):
     def __init__(self, token):
@@ -44,9 +44,16 @@ class SlackClient(object):
 
     def process_changes(self, data):
         if "type" in data.keys():
-            if data["type"] in ['channel_created', 'im_created']:
+            if data["type"] in ('channel_created', 'group_joined'):
                 channel = data["channel"]
-                self.server.attach_channel(channel.get("name", ""), channel["id"], [])
+                self.server.attach_channel(channel["name"], channel["id"], [])
+            if data["type"] == 'im_created':
+                channel = data["channel"]
+                self.server.attach_channel(channel["user"], channel["id"], [])
+            if data["type"] == "team_join":
+                user = data["user"]
+                self.server.parse_user_data([user])
+            pass
 
 
 class SlackNotConnected(Exception):
