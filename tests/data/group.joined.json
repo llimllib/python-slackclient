@@ -1,0 +1,36 @@
+{
+  "channel": {
+    "name": "deleteme",
+    "purpose": {
+      "last_set": 0,
+      "creator": "",
+      "value": ""
+    },
+    "unread_count": 0,
+    "last_read": "1463193659.000003",
+    "is_mpim": false,
+    "is_archived": false,
+    "is_open": true,
+    "latest": {
+      "text": "<@U035JM635>:",
+      "user": "U02L9JD0Y",
+      "ts": "1463193659.000003",
+      "type": "message"
+    },
+    "created": 1463193649,
+    "creator": "U02L9JD0Y",
+    "members": [
+      "U02L9JD0Y",
+      "U035JM635"
+    ],
+    "topic": {
+      "last_set": 0,
+      "creator": "",
+      "value": ""
+    },
+    "is_group": true,
+    "unread_count_display": 0,
+    "id": "G18TJFWER"
+  },
+  "type": "group_joined"
+}
