@@ -44,9 +44,13 @@ class SlackClient(object):
 
     def process_changes(self, data):
         if "type" in data.keys():
-            if data["type"] in ['channel_created', 'im_created']:
+            if data["type"] in ('channel_created', 'im_created', 'group_joined'):
                 channel = data["channel"]
-                self.server.attach_channel(channel.get("name", ""), channel["id"], [])
+                self.server.attach_channel(channel["name"], channel["id"], [])
+            elif data["type"] == "team_join":
+                user = data["user"]
+                self.server.parse_user_data([user])
+            pass
 
 
 class SlackNotConnected(Exception):

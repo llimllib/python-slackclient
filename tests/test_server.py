@@ -5,9 +5,7 @@ import pytest
 
 @pytest.fixture
 def login_data():
-    login_data = open('_pytest/data/rtm.start.json','r').read()
-    login_data = json.loads(login_data)
-    return login_data
+    return json.load(open('tests/data/rtm.start.json','r'))
 
 def test_Server(server):
     assert type(server) == Server
