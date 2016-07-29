@@ -95,3 +95,9 @@ Send a JSON message directly to the websocket. See RTM documentation for allowed
 
 SlackClient.server.**channnels[int].send_message([text])**
 Send message [text] to [int] channel in the channels list.
+
+
+####Contributors
+-----------
+
+[@TetraEtc](https://github.com/TetraEtc)
